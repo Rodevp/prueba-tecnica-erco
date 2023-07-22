@@ -42,3 +42,54 @@ export const saveProject = async (project) => {
         return {}
     }
 }
+
+export const editProject = async (project) => {
+
+     try {
+         const { data, error } = await supabase
+             .from('solar')
+             .update({...project})
+             .eq('system_id', project?.system_id)
+             .select()
+
+        console.log('data supa -> ', data)
+ 
+         if (data) {
+             return data
+         }
+ 
+         if (error) {
+             console.log('error -> ', error?.message)
+             return {}
+         }
+     } catch (error) {
+         console.log('error -> ', error?.message)
+         return {}
+     }
+}
+
+export const deleteProject = async (system_id) => {
+
+    try {
+        const { data, error } = await supabase
+            .from('solar')
+            .delete()
+            .eq('system_id', system_id)
+
+       console.log('data supa -> ', data)
+
+        if (data == null) {
+            return {
+                delete: "ok"
+            }
+        }
+
+        if (error) {
+            console.log('error -> ', error?.message)
+            return {}
+        }
+    } catch (error) {
+        console.log('error -> ', error?.message)
+        return {}
+    }
+}

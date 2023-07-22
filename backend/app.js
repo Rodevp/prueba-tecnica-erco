@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server"
 import { startStandaloneServer } from "@apollo/server/standalone"
-import { getALlProjects, saveProject } from "./controllers.js"
+import { deleteProject, editProject, getALlProjects, saveProject } from "./controllers.js"
 
 const typeDefs = `#graphql
 
@@ -24,12 +24,17 @@ const typeDefs = `#graphql
         total_generation:  String
     }
 
+    type Delete {
+        delete: String
+    }
+
    
     type Query {
         allProjects: [ProjectTable]
     }
 
     type Mutation {
+        
         saveProject(
             system_id:  String!
             system_name:  String!
@@ -42,15 +47,27 @@ const typeDefs = `#graphql
             current_generation:  String!
             total_generation:  String!
         ): Project
+
+        editProject(
+            system_id:  String!
+            system_name:  String!
+            location:  String!
+            inverter_brand:  String!
+            panel_brand: String!
+            panel_power:  String!
+            panel_quantity:  String!
+            installed_power: String!
+            current_generation:  String!
+            total_generation:  String!
+        ): Project
+
+        deleteProject(system_id: String!): Delete
+
     }
 
+
+
 `;
-
-
-/**
- * 
- * 
- */
 
 const resolvers = {
     Query: {
@@ -107,6 +124,44 @@ const resolvers = {
 
             return project[0]
 
+        },
+        editProject: async (root, args) => {
+
+            console.log('args -> ', args)
+
+            const {
+                system_id,
+                system_name,
+                location,
+                inverter_brand,
+                panel_brand,
+                panel_power,
+                panel_quantity,
+                installed_power,
+                current_generation,
+                total_generation,
+            } = args
+
+            const project = await editProject({
+                system_id,
+                system_name,
+                location,
+                inverter_brand,
+                panel_brand,
+                panel_power,
+                panel_quantity,
+                installed_power,
+                current_generation,
+                total_generation,
+            })
+
+            return project[0]
+
+        },
+        deleteProject: async (root, args) => {
+            const { system_id } = args
+            const response = await deleteProject(system_id)
+            return response
         }
     }
 }
