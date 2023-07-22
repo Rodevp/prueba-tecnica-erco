@@ -68,13 +68,13 @@ export const editProject = async (project) => {
      }
 }
 
-export const deleteProject = async (system_id) => {
+export const deleteProject = async (id) => {
 
     try {
         const { data, error } = await supabase
             .from('solar')
             .delete()
-            .eq('system_id', system_id)
+            .eq('id', id)
 
        console.log('data supa -> ', data)
 

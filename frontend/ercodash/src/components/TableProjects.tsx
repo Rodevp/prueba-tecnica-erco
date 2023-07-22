@@ -13,11 +13,7 @@ type Project = {
 
 function TableProjects() {
 
-
-    const { data, loading, error } = useQuery(GET_ALL_PROJECT_TABLE)
-
-    console.log(data, loading, error)
-
+    const { data, loading } = useQuery(GET_ALL_PROJECT_TABLE)
 
     return (
         <div>

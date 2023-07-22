@@ -62,7 +62,7 @@ const typeDefs = `#graphql
             total_generation:  String!
         ): Project
 
-        deleteProject(system_id: String!): Delete
+        deleteProject(id: String!): Delete
 
     }
 
@@ -161,8 +161,8 @@ const resolvers = {
 
         },
         deleteProject: async (root, args) => {
-            const { system_id } = args
-            const response = await deleteProject(system_id)
+            const { id } = args
+            const response = await deleteProject(id)
             return response
         }
     }

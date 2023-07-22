@@ -32,8 +32,8 @@ mutation($systemId: String!, $systemName: String!, $location: String!, $inverter
 `
 
 export const DELETE_PROJECT = gql`
-mutation($systemId: String!) {
-  deleteProject(system_id: $systemId) {
+mutation($deleteProjectId: String!) {
+  deleteProject(id: $deleteProjectId) {
     delete
   }
 }
