@@ -21,8 +21,6 @@ export const getALlProjects = async () => {
 
 export const saveProject = async (project) => {
 
-   console.log('project param -> ', project) 
-
     try {
         const { data, error } = await supabase
             .from('solar')
@@ -52,8 +50,6 @@ export const editProject = async (project) => {
              .eq('system_id', project?.system_id)
              .select()
 
-        console.log('data supa -> ', data)
- 
          if (data) {
              return data
          }

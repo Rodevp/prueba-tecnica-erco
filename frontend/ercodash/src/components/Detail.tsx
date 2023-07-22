@@ -21,10 +21,6 @@ function Detail({ id, showDetail }: Props) {
     getDetail({ variables: { getProjectId: id } })
   }, [])
 
-  if (data) {
-    console.log(data)
-  }
-
   return (
     <div>
 

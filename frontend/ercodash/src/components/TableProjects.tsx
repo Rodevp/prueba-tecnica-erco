@@ -4,6 +4,7 @@ import { GET_ALL_PROJECT_TABLE } from "../querys"
 import Loading from "./Loading"
 import Detail from "./Detail"
 import { useState } from "react"
+import EditProject from "./EditProject"
 
 type Project = {
     name?: string
@@ -20,11 +21,15 @@ function TableProjects() {
         show: false,
         id: ""
     })
+    const [showEdit, setShowEdit] = useState({
+        show: false,
+        id: ""
+    })
 
     return (
         <>
             {
-                showDetail.show !== true && (
+                showDetail.show !== true && showEdit.show !== true && (
                     <div>
                         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -57,6 +62,7 @@ function TableProjects() {
                                                     name={project.name}
                                                     totalGeneration={project.totalGeneration}
                                                     showDetail={setShowDetail}
+                                                    showEdit={setShowEdit}
                                                     refetch={refetch}
                                                 />
                                             ))
@@ -69,6 +75,9 @@ function TableProjects() {
             }
             {
                 showDetail.show && <Detail id={showDetail.id} showDetail={setShowDetail} />
+            }
+            {
+                showEdit.show && <EditProject showEdit={setShowEdit} id={showEdit.id} />
             }
         </>
     )

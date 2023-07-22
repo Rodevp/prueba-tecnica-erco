@@ -14,9 +14,17 @@ interface Props {
     id: string
     showDetail: Dispatch
     refetch: any
+    showEdit: Dispatch
 }
 
-function Project({PanelPower, currentGeneration, name, totalGeneration,id, showDetail, refetch}: Props) {
+function Project({
+    PanelPower,
+    currentGeneration,
+    name, totalGeneration,
+    id,
+    showDetail,
+    refetch,
+    showEdit }: Props) {
 
     const [deleteProject, { }] = useMutation(DELETE_PROJECT)
 
@@ -34,11 +42,18 @@ function Project({PanelPower, currentGeneration, name, totalGeneration,id, showD
             <td className="px-6 py-4">
                 {PanelPower}
             </td>
-            <td className="px-6 py-4">
+            <td className="px-6 py-4 cursor-pointer"
+                onClick={() => {
+                    showEdit({
+                        show: true,
+                        id
+                    })
+                }}
+            >
                 <p className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</p>
             </td>
             <td className="px-6 py-4 cursor-pointer"
-                 onClick={() => {
+                onClick={() => {
                     showDetail({
                         id,
                         show: true
@@ -50,8 +65,8 @@ function Project({PanelPower, currentGeneration, name, totalGeneration,id, showD
             <td className="px-6 py-4 cursor-pointer"
                 onClick={() => {
                     deleteProject({
-                      variables: {
-                        deleteProjectId: id
+                        variables: {
+                            deleteProjectId: id
                         }
                     })
                     refetch()
