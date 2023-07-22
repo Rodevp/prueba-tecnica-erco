@@ -1,48 +1,23 @@
-import { useEffect, useState } from "react"
 import Project from "./Project"
+import { useQuery } from "@apollo/client"
+import { GET_ALL_PROJECT_TABLE } from "../querys"
+import Loading from "./Loading"
 
 type Project = {
-    name? : string
-    currentGeneration? : string
-    PanelPower? : string
-    totalGeneration? : string
+    name?: string
+    currentGeneration?: string
+    PanelPower?: string
+    totalGeneration?: string
+    id?: string
 }
 
 function TableProjects() {
 
-    const [data, setData] = useState<Array<Project>>([])
 
-    useEffect(() => {
+    const { data, loading, error } = useQuery(GET_ALL_PROJECT_TABLE)
 
-        const QUERY = {
-            query: `
-            query {
-                allProjects {
-                  name
-                  currentGeneration
-                  PanelPower
-                  totalGeneration
-                }
-              }
-            
-            `
-        }
+    console.log(data, loading, error)
 
-        fetch('http://localhost:4200/', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(QUERY)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setData(data?.data?.allProjects)
-            })
-            .catch(err => console.log(err?.message))
-
-    }, [])
 
     return (
         <div>
@@ -66,14 +41,17 @@ function TableProjects() {
                     </thead>
                     <tbody>
                         {
-                            data?.map(project => (
-                             <Project
-                                PanelPower={project.PanelPower}
-                                currentGeneration={project.currentGeneration}
-                                name={project.name}
-                                totalGeneration={project.totalGeneration}
-                             />
-                            ))
+                            loading
+                                ? <Loading />
+                                : data?.allProjects.map((project: Project) => (
+                                    <Project
+                                        key={project.id}
+                                        PanelPower={project.PanelPower}
+                                        currentGeneration={project.currentGeneration}
+                                        name={project.name}
+                                        totalGeneration={project.totalGeneration}
+                                    />
+                                ))
                         }
                     </tbody>
                 </table>

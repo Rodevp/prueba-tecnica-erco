@@ -1,12 +1,13 @@
 import { gql } from "@apollo/client"
 
-export const GET_ALL_PROJECT_TABLE = gql`
+export const GET_ALL_PROJECT_TABLE = gql` 
 query {
   allProjects {
     name
     currentGeneration
     PanelPower
     totalGeneration
+    id
   }
 }
 `

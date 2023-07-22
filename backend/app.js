@@ -9,6 +9,7 @@ const typeDefs = `#graphql
         currentGeneration: String
         totalGeneration: String
         PanelPower: String
+        id: String
     }
 
     type Project {
@@ -81,6 +82,7 @@ const resolvers = {
                         currentGeneration: project?.current_generation,
                         totalGeneration: project?.total_generation,
                         PanelPower: project?.panel_power,
+                        id: project?.id
                     }
                 })
                 return projects
