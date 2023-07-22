@@ -15,7 +15,7 @@ type Project = {
 
 function TableProjects() {
 
-    const { data, loading } = useQuery(GET_ALL_PROJECT_TABLE)
+    const { data, loading, refetch } = useQuery(GET_ALL_PROJECT_TABLE)
     const [showDetail, setShowDetail] = useState({
         show: false,
         id: ""
@@ -57,6 +57,7 @@ function TableProjects() {
                                                     name={project.name}
                                                     totalGeneration={project.totalGeneration}
                                                     showDetail={setShowDetail}
+                                                    refetch={refetch}
                                                 />
                                             ))
                                     }
