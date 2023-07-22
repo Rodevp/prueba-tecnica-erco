@@ -18,7 +18,7 @@ function Project({PanelPower, currentGeneration, name, totalGeneration,id, showD
     //console.log(data)
 
     return (
-        <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+        <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 cursor-pointer"
             onClick={() => {
                 showDetail({
                     id,

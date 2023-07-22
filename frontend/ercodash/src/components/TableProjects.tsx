@@ -67,7 +67,7 @@ function TableProjects() {
                 )
             }
             {
-                showDetail.show && <Detail id={showDetail.id} />
+                showDetail.show && <Detail id={showDetail.id} showDetail={setShowDetail} />
             }
         </>
     )
