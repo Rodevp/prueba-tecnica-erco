@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server"
 import { startStandaloneServer } from "@apollo/server/standalone"
 import { deleteProject, editProject, getALlProjects, saveProject } from "./controllers.js"
+import { supabase } from "./supabase.js";
 
 const typeDefs = `#graphql
 
@@ -63,6 +64,7 @@ const typeDefs = `#graphql
         ): Project
 
         deleteProject(id: String!): Delete
+        getProject(id: String!): Project
 
     }
 
@@ -94,8 +96,6 @@ const resolvers = {
     Mutation: {
         saveProject: async (root, args) => {
 
-            console.log('args -> ', args)
-
             const {
                 system_id,
                 system_name,
@@ -122,14 +122,10 @@ const resolvers = {
                 total_generation,
             })
 
-            console.log('response supa -> ', project)
-
             return project[0]
 
         },
         editProject: async (root, args) => {
-
-            console.log('args -> ', args)
 
             const {
                 system_id,
@@ -164,6 +160,28 @@ const resolvers = {
             const { id } = args
             const response = await deleteProject(id)
             return response
+        },
+        getProject: async (root, args) => {
+            const { id } = args
+            let { data, error } = await supabase
+                .from('solar')
+                .select('*')
+                .eq('id', id)
+
+                console.log("data -> ", data)
+
+            return {
+                system_id:  data[0]?.system_id,
+                system_name:  data[0]?.system_name,
+                location:  data[0]?.location,
+                inverter_brand:  data[0]?.inverter_brand,
+                panel_brand: data[0]?.panel_brand,
+                panel_power:  data[0]?.panel_power,
+                panel_quantity:  data[0]?.panel_quantity,
+                installed_power: data[0]?.installed_power,
+                current_generation:  data[0]?.current_generation,
+                total_generation:  data[0]?.total_generation
+            }
         }
     }
 }

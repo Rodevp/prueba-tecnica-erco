@@ -38,3 +38,20 @@ mutation($deleteProjectId: String!) {
   }
 }
 `
+
+export const GET_PROJECT = gql`
+  mutation($getProjectId: String!) {
+  getProject(id: $getProjectId) {
+    system_id
+    system_name
+    location
+    inverter_brand
+    panel_brand
+    panel_power
+    panel_quantity
+    installed_power
+    current_generation
+    total_generation
+  }
+}
+`
