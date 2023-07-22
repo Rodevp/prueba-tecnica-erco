@@ -1,5 +1,5 @@
 import csv from "csvtojson"
-import { supabase } from "./supabase.js"
+import { supabase } from "../supabase.js"
 
 const scriptDataSaveToDatabase = () => {
     csv()
