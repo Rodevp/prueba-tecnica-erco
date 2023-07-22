@@ -15,6 +15,7 @@ interface Props {
     showDetail: Dispatch
     refetch: any
     showEdit: Dispatch
+    deleteProjectOnState: (id: string) => void
 }
 
 function Project({
@@ -24,7 +25,8 @@ function Project({
     id,
     showDetail,
     refetch,
-    showEdit }: Props) {
+    showEdit,
+    deleteProjectOnState }: Props) {
 
     const [deleteProject, { }] = useMutation(DELETE_PROJECT)
 
@@ -64,6 +66,7 @@ function Project({
             </td>
             <td className="px-6 py-4 cursor-pointer"
                 onClick={() => {
+                    deleteProjectOnState(id)                
                     deleteProject({
                         variables: {
                             deleteProjectId: id

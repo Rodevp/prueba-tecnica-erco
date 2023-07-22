@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client"
 import { GET_ALL_PROJECT_TABLE } from "../querys"
 import Loading from "./Loading"
 import Detail from "./Detail"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import EditProject from "./EditProject"
 
 type Project = {
@@ -25,6 +25,18 @@ function TableProjects() {
         show: false,
         id: ""
     })
+    const [projects, setProjects] = useState([])
+
+    useEffect(() => {
+        if(data) {
+            setProjects(data?.allProjects)
+        }
+    }, [loading])
+
+    const deleteOnState = (id: string): void =>  {
+        const projectsFilter = [...projects].filter((project: Project) => project.id !== id)
+        setProjects(projectsFilter)
+    }
 
     return (
         <>
@@ -53,7 +65,7 @@ function TableProjects() {
                                     {
                                         loading
                                             ? <Loading />
-                                            : data?.allProjects.map((project: Project) => (
+                                            : projects?.map((project: Project) => (
                                                 <Project
                                                     id={project.id}
                                                     key={project.id}
@@ -64,6 +76,7 @@ function TableProjects() {
                                                     showDetail={setShowDetail}
                                                     showEdit={setShowEdit}
                                                     refetch={refetch}
+                                                    deleteProjectOnState={deleteOnState}
                                                 />
                                             ))
                                     }
