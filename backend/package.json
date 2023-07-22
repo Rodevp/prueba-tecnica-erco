@@ -5,14 +5,17 @@
   "main": "script_database.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon ./app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/server": "^4.8.1",
     "@supabase/supabase-js": "^2.26.0",
     "csvtojson": "^2.0.10",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "graphql": "^16.7.1",
+    "nodemon": "^3.0.1"
   }
 }
